@@ -1,0 +1,50 @@
+# .github/workflows/nodejs.yml
+
+
+# This file, nodejs.yml, defines a GitHub Actions workflow for automating Continuous Integration (CI) tasks in a Node.js project.
+# The workflow is named "Node.js CI" and is triggered by two types of events: a push to the main branch or a pull_request targeting the main branch. 
+# This ensures that the CI pipeline runs whenever changes are pushed to the main branch or when a pull request is created or updated.
+
+# The workflow consists of a single job named build, which runs on an ubuntu-latest virtual machine.
+# The strategy section defines a matrix build, specifying two Node.js versions (14 and 16). 
+# This means the job will execute twice, once for each Node.js version, allowing you to test your project against multiple runtime environments.
+
+# The steps section outlines the sequence of actions to perform during the job.
+# The first step, "Checkout repository," uses the actions/checkout@v2 action to clone the repository's code into the runner. The second step,
+# "Setup Node.js," uses the actions/setup-node@v2 action to install the specific Node.js version defined by the matrix. 
+# The third step, "Install dependencies," runs npm install to install the project's dependencies as defined in the package.json file.
+# Finally, the "Run tests" step executes npm test to run the project's test suite, ensuring that the code behaves as expected.
+
+# This workflow is a standard setup for Node.js projects, providing automated testing across multiple Node.js 
+# versions to ensure compatibility and reliability. It helps catch issues early in the development process and maintains code quality.
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14, 16] # The matrix strategy in this GitHub Actions workflow allows you to run the same job multiple times with different configurations. In this case, the matrix is defined under the strategy key, and it specifies a node-version array with two values: [14, 16]. This means the build job will execute twice, once with Node.js version 14 and once with Node.js version 16.
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run tests
+      run: npm test

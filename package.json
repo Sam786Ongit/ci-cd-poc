@@ -1,0 +1,20 @@
+{
+  "name": "ci-cd-poc",
+  "version": "1.0.0",
+  "description": "A poc for building a CI/CD Pipeline",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "mocha test.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "mocha": "^10.6.0",
+    "supertest": "^7.0.0"
+  }
+}
